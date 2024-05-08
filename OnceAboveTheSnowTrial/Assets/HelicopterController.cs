@@ -130,13 +130,17 @@ public class HelicopterLift : MonoBehaviour
 
     void HeightAndRotationChecker()
     {
-        if (transform.position.y >= 0.45f * targetHeight && !resetX)
+        if (transform.position.y >= 3.0f)
         {
             if (Time.time - lastSwayTime >= 1f)
             {
                 SwayBraker();
                 lastSwayTime = Time.time;
             }
+        }
+
+        if (transform.position.y >= 0.45f * targetHeight && !resetX)
+        {
             RotateTowardsTarget();
         }
 
