@@ -864,10 +864,10 @@ MonoBehaviour:
   rotationSpeed: 0.1
   liftSpeed: 0.0015
   liftTime: 8
-  resetRotationXDurationTime: 3
+  resetRotationXDurationTime: 5
   targetHeight: 15
-  maxRotationX: 25
-  landingForce: 0.1
+  maxRotationX: 15
+  landingForce: 0.08
   swayForce: 0.05
 --- !u!65 &1042596337
 BoxCollider:

@@ -63,7 +63,6 @@ public class HelicopterLift : MonoBehaviour
     {
         Vector3 swayDirection = new(Mathf.Sin(Time.time * 25f), 0f, Mathf.Cos(Time.time * 25f));
         rb.AddForce(swayDirection * swayForce, ForceMode.Impulse);
-        Debug.LogError($"Sway: dir {swayDirection * swayForce}");
     }
 
     void Update()
@@ -77,10 +76,8 @@ public class HelicopterLift : MonoBehaviour
                 float newRotationX = transform.rotation.eulerAngles.x;
                 newRotationX -= Time.deltaTime;
 
-                // Aktualizuj rotacjê helikoptera
                 transform.rotation = Quaternion.Euler(newRotationX, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
 
-                // Jeœli osi¹gniêto docelow¹ rotacjê, zakoñcz rotacjê
                 if (newRotationX <= targetRotationX)
                 {
                     isRotating = false;
@@ -115,7 +112,7 @@ public class HelicopterLift : MonoBehaviour
     void UpdateLand()
     {
         rb.AddForce(-9.81f * landingForce * Vector3.up, ForceMode.Acceleration);
-        if (transform.position.y <= 0.25f)
+        if (transform.position.y <= 0.15f)
         {
             isLanding = false;
             rb.useGravity = true;
@@ -124,6 +121,13 @@ public class HelicopterLift : MonoBehaviour
                 helicopterBlade.StopRotors();
             }
         }
+
+        if (transform.rotation.eulerAngles.x <= 355.0f && transform.position.y > 0.25f)
+        {
+            
+            transform.rotation = Quaternion.Euler(355.0f, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+        }
+
         resetX = false;
         return;
     }
@@ -148,7 +152,7 @@ public class HelicopterLift : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(maxRotationX, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         }
-        if (!resetX && CalculateDistance(transform.position, targetPoints[currentTargetIndex].position) <= 2.5f)
+        if (!resetX && CalculateDistance(transform.position, targetPoints[currentTargetIndex].position) <= 4.0f)
         {
             StartCoroutine(ResetRotationX());
         }
